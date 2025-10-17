@@ -17,9 +17,6 @@ const Navbar = () => {
               Buy
             </Link>
             <Link to="/" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Rent
-            </Link>
-            <Link to="/" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
               Sell
             </Link>
           </div>
