@@ -20,7 +20,10 @@ const SignupSeller = () => {
             <span className="text-xl font-bold">HomeHub</span>
           </div>
           
-          <h1 className="text-2xl font-bold mb-2">Create Seller Account</h1>
+          <h1 className="text-2xl font-bold mb-2">Become Your Own Agent</h1>
+          <p className="text-lg font-semibold text-primary mb-2">
+            Sell your own home saving thousands in commission
+          </p>
           <p className="text-muted-foreground mb-6">
             List your property and reach millions of buyers
           </p>
