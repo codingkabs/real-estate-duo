@@ -82,7 +82,7 @@ const Index = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-foreground mb-2">Featured Properties</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-2">Properties for sale</h2>
             <p className="text-muted-foreground">Discover our hand-picked selection of premium listings</p>
           </div>
           
