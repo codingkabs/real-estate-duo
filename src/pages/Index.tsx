@@ -63,8 +63,36 @@ const Index = () => {
             Sell Your Home. Earn Your Commission. Be Your Own Agent.
           </h1>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Take control of your real estate journey. Use our smart tools, AI guidance, and trusted resources to sell your home confidently - without paying thousands in commission.
+            Take control of your real estate journey. Our platform empowers you to list your home on the MLS, attract qualified buyers, and close confidently — without paying thousands in commissions.
           </p>
+          <Button size="lg" variant="secondary" asChild>
+            <a href="/signup/seller">Start Selling Now</a>
+          </Button>
+        </div>
+      </section>
+
+      {/* Quick Benefits Section */}
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="text-center p-6">
+              <div className="text-4xl mb-4">💰</div>
+              <h3 className="text-xl font-bold text-foreground mb-2">Keep Your Commission</h3>
+              <p className="text-muted-foreground">You earn what agents usually take.</p>
+            </div>
+
+            <div className="text-center p-6">
+              <div className="text-4xl mb-4">🤖</div>
+              <h3 className="text-xl font-bold text-foreground mb-2">AI Smart Help</h3>
+              <p className="text-muted-foreground">Get pricing, listing, and marketing guidance from our AI tools.</p>
+            </div>
+
+            <div className="text-center p-6">
+              <div className="text-4xl mb-4">🏡</div>
+              <h3 className="text-xl font-bold text-foreground mb-2">MLS Exposure</h3>
+              <p className="text-muted-foreground">Your property appears on major state and national MLS databases for maximum reach.</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -128,37 +156,51 @@ const Index = () => {
             How You Can Sell Your Home Like a Pro
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="flex justify-center mb-8">
+            <Button size="lg" asChild>
+              <a href="/signup/seller">Try It Free Today</a>
+            </Button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-primary-foreground">1</span>
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-3">Create Your Listing</h3>
-              <p className="text-muted-foreground">Upload photos, describe your home, and set your price.</p>
+              <p className="text-muted-foreground">Upload photos, describe your home, and set your price in minutes.</p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-primary-foreground">2</span>
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">Get AI Recommendations</h3>
-              <p className="text-muted-foreground">Our system helps you optimize for best visibility.</p>
+              <h3 className="text-xl font-semibold text-foreground mb-3">AI Optimization</h3>
+              <p className="text-muted-foreground">Our tools fine-tune your listing for visibility and pricing accuracy.</p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-primary-foreground">3</span>
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">Connect with Buyers Directly</h3>
-              <p className="text-muted-foreground">Receive offers, negotiate easily, and track progress.</p>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Get MLS Exposure</h3>
+              <p className="text-muted-foreground">Instantly listed on state and national MLS systems — where agents and serious buyers search.</p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-primary-foreground">4</span>
               </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Connect & Negotiate</h3>
+              <p className="text-muted-foreground">Communicate directly with buyers and agents.</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-primary-foreground">5</span>
+              </div>
               <h3 className="text-xl font-semibold text-foreground mb-3">Close with Confidence</h3>
-              <p className="text-muted-foreground">We guide you through every step, with optional agent or legal support.</p>
+              <p className="text-muted-foreground">Use our trusted legal forms or optional agent support for a seamless close.</p>
             </div>
           </div>
         </div>
@@ -167,54 +209,99 @@ const Index = () => {
       {/* Why Choose Us Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4">
             Why Homeowners Love Us
           </h2>
+          <p className="text-center text-xl text-muted-foreground mb-12">More exposure. More control. More profit.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
             <div className="flex items-start gap-3 p-6 bg-card rounded-lg border">
-              <span className="text-2xl">🔹</span>
-              <p className="text-foreground font-medium">Save up to 6% in commissions</p>
+              <span className="text-2xl">💰</span>
+              <p className="text-foreground font-medium">Save up to 6% in commissions – Keep what traditional agents take.</p>
             </div>
 
             <div className="flex items-start gap-3 p-6 bg-card rounded-lg border">
-              <span className="text-2xl">🔹</span>
-              <p className="text-foreground font-medium">AI-powered pricing & negotiation tools</p>
+              <span className="text-2xl">🤖</span>
+              <p className="text-foreground font-medium">AI-powered pricing & negotiation tools – Get smart recommendations to sell faster.</p>
             </div>
 
             <div className="flex items-start gap-3 p-6 bg-card rounded-lg border">
-              <span className="text-2xl">🔹</span>
-              <p className="text-foreground font-medium">Verified legal forms & closing support</p>
+              <span className="text-2xl">🏛️</span>
+              <p className="text-foreground font-medium">Listed on State and National MLS – Enjoy full professional exposure on official MLS databases, just like top agents.</p>
             </div>
 
             <div className="flex items-start gap-3 p-6 bg-card rounded-lg border">
-              <span className="text-2xl">🔹</span>
-              <p className="text-foreground font-medium">24/7 assistance from real estate experts</p>
+              <span className="text-2xl">📄</span>
+              <p className="text-foreground font-medium">Verified legal forms & closing support – Safe, compliant, and easy to follow.</p>
             </div>
 
             <div className="flex items-start gap-3 p-6 bg-card rounded-lg border">
-              <span className="text-2xl">🔹</span>
-              <p className="text-foreground font-medium">Transparent, fast, and stress-free process</p>
+              <span className="text-2xl">📞</span>
+              <p className="text-foreground font-medium">24/7 expert assistance – Real estate professionals ready to help when you need it.</p>
             </div>
 
             <div className="flex items-start gap-3 p-6 bg-card rounded-lg border">
-              <span className="text-2xl">🔹</span>
-              <p className="text-foreground font-medium">Listed on State and National MLS – Your home gets full professional exposure on major MLS networks — just like listings from top real estate agents</p>
+              <span className="text-2xl">⚡</span>
+              <p className="text-foreground font-medium">Transparent, fast, and stress-free process – No hidden fees, no surprises.</p>
             </div>
           </div>
 
           {/* Testimonial */}
           <div className="max-w-3xl mx-auto bg-primary/5 rounded-lg p-8 border-l-4 border-primary">
             <p className="text-lg text-foreground italic mb-4">
-              "I sold my home in 12 days and saved $18,000 in commissions!"
+              🗣️ "I sold my home in 12 days and saved $18,000 in commissions!"
             </p>
             <p className="text-muted-foreground font-semibold">— Maria L.</p>
           </div>
         </div>
       </section>
 
+      {/* MLS Exposure Section */}
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-6">
+            Get Your Home Seen Everywhere Buyers Look
+          </h2>
+          
+          <p className="text-lg text-center text-muted-foreground max-w-3xl mx-auto mb-8">
+            Your listing doesn't just stay on one website - it's syndicated across state and national MLS systems, giving it professional-level exposure. That means agents, brokers, and serious buyers across the country can discover your property.
+          </p>
+
+          <div className="max-w-2xl mx-auto mb-8">
+            <h3 className="text-xl font-semibold text-foreground mb-4 text-center">With one click, your home appears on:</h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="bg-card p-4 rounded-lg border text-center">
+                <p className="font-semibold text-foreground">Realtor.com</p>
+              </div>
+              <div className="bg-card p-4 rounded-lg border text-center">
+                <p className="font-semibold text-foreground">Zillow</p>
+              </div>
+              <div className="bg-card p-4 rounded-lg border text-center">
+                <p className="font-semibold text-foreground">Redfin</p>
+              </div>
+              <div className="bg-card p-4 rounded-lg border text-center">
+                <p className="font-semibold text-foreground">Trulia</p>
+              </div>
+              <div className="bg-card p-4 rounded-lg border text-center md:col-span-2">
+                <p className="font-semibold text-foreground">And hundreds of agent websites via MLS feeds</p>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-center text-lg text-foreground font-medium mb-8">
+            You get all the visibility of a top agent - while keeping the commission for yourself.
+          </p>
+
+          <div className="flex justify-center">
+            <Button size="lg" asChild>
+              <a href="/signup/seller">List My Home on MLS Today</a>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Section */}
-      <section id="pricing" className="py-16 bg-muted/30">
+      <section id="pricing" className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4">
             Simple Pricing. No Surprises.
@@ -226,7 +313,7 @@ const Index = () => {
               <p className="text-3xl font-bold text-primary mb-4">Free</p>
               <p className="text-muted-foreground mb-6">Basic listing, AI valuation, offer tracking</p>
               <Button className="w-full" variant="outline" asChild>
-                <a href="/signup/seller">Get Started</a>
+                <a href="/signup/seller">Get Started for Free</a>
               </Button>
             </div>
             
@@ -236,7 +323,7 @@ const Index = () => {
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-2">Pro</h3>
               <p className="text-3xl font-bold text-primary mb-4">$199<span className="text-lg text-muted-foreground">/month</span></p>
-              <p className="text-muted-foreground mb-6">Advanced marketing tools, legal support, featured listings</p>
+              <p className="text-muted-foreground mb-6">MLS listing, advanced marketing tools, legal support</p>
               <Button className="w-full" asChild>
                 <a href="/signup/seller">Start Pro</a>
               </Button>
@@ -245,7 +332,7 @@ const Index = () => {
             <div className="bg-card rounded-lg p-8 border shadow-sm">
               <h3 className="text-2xl font-bold text-foreground mb-2">Premium</h3>
               <p className="text-3xl font-bold text-primary mb-4">$499<span className="text-lg text-muted-foreground"> one-time</span></p>
-              <p className="text-muted-foreground mb-6">Everything included + personal coach</p>
+              <p className="text-muted-foreground mb-6">All Pro features + personalized real estate coaching</p>
               <Button className="w-full" variant="outline" asChild>
                 <a href="/signup/seller">Go Premium</a>
               </Button>
@@ -272,10 +359,13 @@ const Index = () => {
             
             <div className="w-full md:w-2/3">
               <p className="text-lg text-foreground italic mb-4 leading-relaxed">
-                "I believe everyone deserves the power to sell their home on their own terms. I started this platform to make real estate fair, simple, and empowering — for everyday homeowners."
+                "I believe every homeowner deserves the power to sell their property on their own terms - with confidence, clarity, and control. I built this platform to make real estate fair, modern, and empowering for everyone."
               </p>
-              <p className="text-muted-foreground font-semibold">
+              <p className="text-muted-foreground font-semibold mb-4">
                 — Roselin Samnani, Founder & Entrepreneur
+              </p>
+              <p className="text-primary font-semibold italic">
+                "Empowering homeowners to earn their commission - one home at a time."
               </p>
             </div>
           </div>
