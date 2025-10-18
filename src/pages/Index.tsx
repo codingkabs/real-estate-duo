@@ -8,6 +8,8 @@ import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
 import soldHomeImage from "@/assets/sold-home-success.jpg";
+import founderImage from "@/assets/founder.png";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   const featuredProperties = [
@@ -206,6 +208,75 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section id="pricing" className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4">
+            Simple Pricing. No Surprises.
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mt-12">
+            <div className="bg-card rounded-lg p-8 border shadow-sm">
+              <h3 className="text-2xl font-bold text-foreground mb-2">Starter</h3>
+              <p className="text-3xl font-bold text-primary mb-4">Free</p>
+              <p className="text-muted-foreground mb-6">Basic listing, AI valuation, offer tracking</p>
+              <Button className="w-full" variant="outline" asChild>
+                <a href="/signup/seller">Get Started</a>
+              </Button>
+            </div>
+            
+            <div className="bg-card rounded-lg p-8 border-2 border-primary shadow-lg relative">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
+                Popular
+              </div>
+              <h3 className="text-2xl font-bold text-foreground mb-2">Pro</h3>
+              <p className="text-3xl font-bold text-primary mb-4">$199<span className="text-lg text-muted-foreground">/month</span></p>
+              <p className="text-muted-foreground mb-6">Advanced marketing tools, legal support, featured listings</p>
+              <Button className="w-full" asChild>
+                <a href="/signup/seller">Start Pro</a>
+              </Button>
+            </div>
+            
+            <div className="bg-card rounded-lg p-8 border shadow-sm">
+              <h3 className="text-2xl font-bold text-foreground mb-2">Premium</h3>
+              <p className="text-3xl font-bold text-primary mb-4">$499<span className="text-lg text-muted-foreground"> one-time</span></p>
+              <p className="text-muted-foreground mb-6">Everything included + personal coach</p>
+              <Button className="w-full" variant="outline" asChild>
+                <a href="/signup/seller">Go Premium</a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">
+            Meet the Vision Behind the Change
+          </h2>
+          
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+            <div className="w-full md:w-1/3">
+              <img 
+                src={founderImage} 
+                alt="Roselin Samnani, Founder" 
+                className="rounded-lg shadow-xl w-full"
+              />
+            </div>
+            
+            <div className="w-full md:w-2/3">
+              <p className="text-lg text-foreground italic mb-4 leading-relaxed">
+                "I believe everyone deserves the power to sell their home on their own terms. I started this platform to make real estate fair, simple, and empowering — for everyday homeowners."
+              </p>
+              <p className="text-muted-foreground font-semibold">
+                — Roselin Samnani, Founder & Entrepreneur
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="py-16 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
@@ -220,6 +291,8 @@ const Index = () => {
           </Button>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };
