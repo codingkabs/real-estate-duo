@@ -30,6 +30,11 @@ const Navbar = () => {
                 List Property
               </Button>
             </Link>
+            <Link to="/login">
+              <Button variant="ghost" size="sm">
+                Sign In
+              </Button>
+            </Link>
             <Link to="/signup/buyer">
               <Button size="sm">
                 Sign Up
