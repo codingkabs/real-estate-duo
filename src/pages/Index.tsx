@@ -57,7 +57,7 @@ const Index = () => {
         
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
-            Find Your Dream Home
+            Sell Your Home. Earn Your Commission. Be Your Own Agent.
           </h1>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Search millions of homes, apartments, and houses for sale or rent
