@@ -223,11 +223,48 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      get_admin_agents: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          active_listings: number
+          created_at: string
+          email: string
+          full_name: string
+          phone: string
+          total_listings: number
+          user_id: string
+        }[]
+      }
+      get_admin_overview: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
       get_recommended_properties: {
         Args: { p_user_id: string }
         Returns: {
@@ -247,8 +284,16 @@ export type Database = {
           updated_at: string
         }[]
       }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
+      app_role: "admin" | "seller" | "buyer"
       offer_status: "pending" | "accepted" | "rejected"
       property_status: "active" | "sold" | "pending"
       user_role: "buyer" | "seller" | "agent" | "admin"
@@ -379,6 +424,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "seller", "buyer"],
       offer_status: ["pending", "accepted", "rejected"],
       property_status: ["active", "sold", "pending"],
       user_role: ["buyer", "seller", "agent", "admin"],
