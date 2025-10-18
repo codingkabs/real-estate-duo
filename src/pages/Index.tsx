@@ -118,6 +118,108 @@ const Index = () => {
           </Button>
         </div>
       </section>
+
+      {/* How It Works Section */}
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">
+            How You Can Sell Your Home Like a Pro
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-primary-foreground">1</span>
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Create Your Listing</h3>
+              <p className="text-muted-foreground">Upload photos, describe your home, and set your price.</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-primary-foreground">2</span>
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Get AI Recommendations</h3>
+              <p className="text-muted-foreground">Our system helps you optimize for best visibility.</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-primary-foreground">3</span>
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Connect with Buyers Directly</h3>
+              <p className="text-muted-foreground">Receive offers, negotiate easily, and track progress.</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-primary-foreground">4</span>
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Close with Confidence</h3>
+              <p className="text-muted-foreground">We guide you through every step, with optional agent or legal support.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">
+            Why Homeowners Love Us
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
+            <div className="flex items-start gap-3 p-6 bg-card rounded-lg border">
+              <span className="text-2xl">🔹</span>
+              <p className="text-foreground font-medium">Save up to 6% in commissions</p>
+            </div>
+
+            <div className="flex items-start gap-3 p-6 bg-card rounded-lg border">
+              <span className="text-2xl">🔹</span>
+              <p className="text-foreground font-medium">AI-powered pricing & negotiation tools</p>
+            </div>
+
+            <div className="flex items-start gap-3 p-6 bg-card rounded-lg border">
+              <span className="text-2xl">🔹</span>
+              <p className="text-foreground font-medium">Verified legal forms & closing support</p>
+            </div>
+
+            <div className="flex items-start gap-3 p-6 bg-card rounded-lg border">
+              <span className="text-2xl">🔹</span>
+              <p className="text-foreground font-medium">24/7 assistance from real estate experts</p>
+            </div>
+
+            <div className="flex items-start gap-3 p-6 bg-card rounded-lg border">
+              <span className="text-2xl">🔹</span>
+              <p className="text-foreground font-medium">Transparent, fast, and stress-free process</p>
+            </div>
+          </div>
+
+          {/* Testimonial */}
+          <div className="max-w-3xl mx-auto bg-primary/5 rounded-lg p-8 border-l-4 border-primary">
+            <p className="text-lg text-foreground italic mb-4">
+              "I sold my home in 12 days and saved $18,000 in commissions!"
+            </p>
+            <p className="text-muted-foreground font-semibold">— Maria L.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-16 bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Try It Free Risk Free Today
+          </h2>
+          <p className="text-xl mb-8 opacity-90">
+            Money Back Guarantee
+          </p>
+          <Button size="lg" variant="secondary" asChild>
+            <a href="/signup/seller">Start Selling Now</a>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };
