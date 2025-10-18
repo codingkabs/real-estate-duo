@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Navbar from "@/components/Navbar";
 import PropertyCard from "@/components/PropertyCard";
+import FloatingChatButton from "@/components/FloatingChatButton";
 import heroImage from "@/assets/hero-home.jpg";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
@@ -354,6 +355,7 @@ const Index = () => {
       </section>
 
       <Footer />
+      <FloatingChatButton />
     </div>
   );
 };
