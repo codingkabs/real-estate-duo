@@ -17,7 +17,7 @@ const SignupSeller = () => {
         <Card className="p-8">
           <div className="flex items-center gap-2 mb-6">
             <Home className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">HomeHub</span>
+            <span className="text-xl font-bold">LinkFSBO</span>
           </div>
           
           <h1 className="text-2xl font-bold mb-2">Sell your home. Earn your commission.</h1>
