@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Search, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Navbar from "@/components/Navbar";
@@ -72,6 +72,10 @@ const Index = () => {
             <h2 className="text-3xl font-bold text-foreground mb-4">Properties for sale</h2>
             <div className="max-w-3xl bg-white rounded-lg p-2 shadow-xl">
               <div className="flex gap-2">
+                <Button variant="outline" size="lg" className="gap-2">
+                  <Filter className="h-5 w-5" />
+                  Filter
+                </Button>
                 <Input 
                   placeholder="Enter an address, neighborhood, city, or ZIP code"
                   className="flex-1 border-0 focus-visible:ring-0 text-lg"
