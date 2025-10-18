@@ -196,6 +196,11 @@ const Index = () => {
               <span className="text-2xl">🔹</span>
               <p className="text-foreground font-medium">Transparent, fast, and stress-free process</p>
             </div>
+
+            <div className="flex items-start gap-3 p-6 bg-card rounded-lg border">
+              <span className="text-2xl">🔹</span>
+              <p className="text-foreground font-medium">Listed on State and National MLS – Your home gets full professional exposure on major MLS networks — just like listings from top real estate agents</p>
+            </div>
           </div>
 
           {/* Testimonial */}
