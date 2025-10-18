@@ -12,20 +12,16 @@ export interface Offer {
   updated_at: string;
 }
 
-export function useOffers(propertyId?: string) {
+export function usePropertyOffers(propertyId: string) {
   const [offers, setOffers] = useState<Offer[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
-    if (propertyId) {
-      fetchOffers();
-    }
+    if (propertyId) fetchOffers();
   }, [propertyId]);
 
   const fetchOffers = async () => {
-    if (!propertyId) return;
-    
     setIsLoading(true);
     try {
       const { data, error } = await supabase

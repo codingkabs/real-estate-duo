@@ -7,6 +7,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -16,30 +17,30 @@ import { DollarSign } from "lucide-react";
 interface MakeOfferDialogProps {
   propertyId: string;
   propertyPrice: number;
-  onOfferCreated?: () => void;
+  onOfferSubmitted?: () => void;
 }
 
-export default function MakeOfferDialog({ propertyId, propertyPrice, onOfferCreated }: MakeOfferDialogProps) {
+export function MakeOfferDialog({ propertyId, propertyPrice, onOfferSubmitted }: MakeOfferDialogProps) {
   const [open, setOpen] = useState(false);
-  const [offerPrice, setOfferPrice] = useState(propertyPrice);
+  const [offerPrice, setOfferPrice] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { createOffer } = useOfferMutations();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const price = parseFloat(offerPrice);
     
-    if (offerPrice <= 0) {
+    if (!price || price <= 0) {
       return;
     }
 
     setIsSubmitting(true);
     try {
-      const { error } = await createOffer(propertyId, offerPrice);
-      
-      if (!error) {
+      const { data } = await createOffer(propertyId, price);
+      if (data) {
         setOpen(false);
-        setOfferPrice(propertyPrice);
-        onOfferCreated?.();
+        setOfferPrice("");
+        onOfferSubmitted?.();
       }
     } finally {
       setIsSubmitting(false);
@@ -55,35 +56,35 @@ export default function MakeOfferDialog({ propertyId, propertyPrice, onOfferCrea
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Make an Offer</DialogTitle>
-          <DialogDescription>
-            Submit your offer for this property. The owner will review it.
-          </DialogDescription>
-        </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Label htmlFor="offerPrice">Offer Price</Label>
-            <div className="relative mt-2">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
-              <Input
-                id="offerPrice"
-                type="number"
-                min="0"
-                step="1000"
-                value={offerPrice}
-                onChange={(e) => setOfferPrice(parseFloat(e.target.value))}
-                className="pl-7"
-                required
-              />
-            </div>
-            <p className="text-sm text-muted-foreground mt-1">
-              Listed price: ${propertyPrice.toLocaleString()}
-            </p>
+        <form onSubmit={handleSubmit}>
+          <DialogHeader>
+            <DialogTitle>Make an Offer</DialogTitle>
+            <DialogDescription>
+              Submit your offer for this property. Asking price: ${propertyPrice.toLocaleString()}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <Label htmlFor="offer-price">Your Offer ($)</Label>
+            <Input
+              id="offer-price"
+              type="number"
+              placeholder={propertyPrice.toString()}
+              value={offerPrice}
+              onChange={(e) => setOfferPrice(e.target.value)}
+              min="0"
+              step="1000"
+              required
+              className="mt-2"
+            />
           </div>
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Submitting..." : "Submit Offer"}
-          </Button>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit Offer"}
+            </Button>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

@@ -1,83 +1,102 @@
-import { useOffers } from "@/hooks/useOffers";
+import { usePropertyOffers } from "@/hooks/useOffers";
 import { useOfferMutations } from "@/hooks/useOffers";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Check, X } from "lucide-react";
+import { CheckCircle, XCircle, Clock } from "lucide-react";
 
 interface OffersListProps {
   propertyId: string;
   isOwner: boolean;
 }
 
-export default function OffersList({ propertyId, isOwner }: OffersListProps) {
-  const { offers, isLoading, refetch } = useOffers(propertyId);
+export function OffersList({ propertyId, isOwner }: OffersListProps) {
+  const { offers, isLoading, refetch } = usePropertyOffers(propertyId);
   const { updateOfferStatus } = useOfferMutations();
 
-  const handleOfferAction = async (offerId: string, status: "accepted" | "rejected") => {
-    await updateOfferStatus(offerId, status);
-    refetch();
+  const handleAccept = async (offerId: string) => {
+    const { data } = await updateOfferStatus(offerId, "accepted");
+    if (data) refetch();
+  };
+
+  const handleReject = async (offerId: string) => {
+    const { data } = await updateOfferStatus(offerId, "rejected");
+    if (data) refetch();
   };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "accepted":
-        return <Badge className="bg-green-500">Accepted</Badge>;
+        return <Badge className="bg-green-500"><CheckCircle className="h-3 w-3 mr-1" />Accepted</Badge>;
       case "rejected":
-        return <Badge variant="destructive">Rejected</Badge>;
+        return <Badge variant="destructive"><XCircle className="h-3 w-3 mr-1" />Rejected</Badge>;
       default:
-        return <Badge variant="secondary">Pending</Badge>;
+        return <Badge variant="secondary"><Clock className="h-3 w-3 mr-1" />Pending</Badge>;
     }
   };
 
   if (isLoading) {
-    return <p className="text-muted-foreground">Loading offers...</p>;
+    return <div className="text-muted-foreground">Loading offers...</div>;
   }
 
   if (!offers.length) {
-    return <p className="text-muted-foreground">No offers yet.</p>;
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Offers</CardTitle>
+          <CardDescription>No offers yet</CardDescription>
+        </CardHeader>
+      </Card>
+    );
   }
 
   return (
-    <div className="space-y-4">
-      {offers.map((offer) => (
-        <Card key={offer.id}>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-lg">
-                ${offer.offer_price.toLocaleString()}
-              </CardTitle>
-              {getStatusBadge(offer.status)}
+    <Card>
+      <CardHeader>
+        <CardTitle>Offers ({offers.length})</CardTitle>
+        <CardDescription>
+          {isOwner ? "Manage offers on your property" : "Your offers"}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {offers.map((offer) => (
+          <div
+            key={offer.id}
+            className="flex items-center justify-between p-4 border rounded-lg"
+          >
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-semibold">
+                  ${offer.offer_price.toLocaleString()}
+                </span>
+                {getStatusBadge(offer.status)}
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Submitted {new Date(offer.created_at).toLocaleDateString()}
+              </p>
             </div>
-            <CardDescription>
-              Submitted on {new Date(offer.created_at).toLocaleDateString()}
-            </CardDescription>
-          </CardHeader>
-          {isOwner && offer.status === "pending" && (
-            <CardContent>
+            
+            {isOwner && offer.status === "pending" && (
               <div className="flex gap-2">
                 <Button
                   size="sm"
-                  onClick={() => handleOfferAction(offer.id, "accepted")}
-                  className="flex-1"
+                  variant="default"
+                  onClick={() => handleAccept(offer.id)}
                 >
-                  <Check className="h-4 w-4 mr-2" />
                   Accept
                 </Button>
                 <Button
                   size="sm"
-                  variant="destructive"
-                  onClick={() => handleOfferAction(offer.id, "rejected")}
-                  className="flex-1"
+                  variant="outline"
+                  onClick={() => handleReject(offer.id)}
                 >
-                  <X className="h-4 w-4 mr-2" />
                   Reject
                 </Button>
               </div>
-            </CardContent>
-          )}
-        </Card>
-      ))}
-    </div>
+            )}
+          </div>
+        ))}
+      </CardContent>
+    </Card>
   );
 }
