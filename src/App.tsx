@@ -9,6 +9,7 @@ import Signup from "./pages/Signup";
 import SignupBuyer from "./pages/SignupBuyer";
 import SignupSeller from "./pages/SignupSeller";
 import PropertyDetail from "./pages/PropertyDetail";
+import CreateProperty from "./pages/CreateProperty";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/create-property" element={<CreateProperty />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signup/buyer" element={<SignupBuyer />} />
           <Route path="/signup/seller" element={<SignupSeller />} />

@@ -1,25 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Database } from "@/integrations/supabase/types";
 
-type Property = Database["public"]["Tables"]["properties"]["Row"];
-type PropertyInsert = Database["public"]["Tables"]["properties"]["Insert"];
-type PropertyUpdate = Database["public"]["Tables"]["properties"]["Update"];
+export interface Property {
+  id: string;
+  owner_id: string;
+  title: string;
+  description: string | null;
+  address: string;
+  price: number;
+  bedrooms: number;
+  bathrooms: number;
+  area: number;
+  images: string[] | null;
+  status: "active" | "sold" | "pending";
+  created_at: string;
+  updated_at: string;
+}
 
-interface PropertyFilters {
+export interface PropertyFilters {
   city?: string;
   minPrice?: number;
   maxPrice?: number;
   bedrooms?: number;
 }
 
-export function useProperties() {
+export function useProperties(filters?: PropertyFilters) {
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
 
-  // GET /properties - List all active properties with filters
-  const getProperties = async (filters?: PropertyFilters) => {
+  useEffect(() => {
+    fetchProperties();
+  }, [filters]);
+
+  const fetchProperties = async () => {
     setIsLoading(true);
     try {
       let query = supabase
@@ -44,21 +59,31 @@ export function useProperties() {
       const { data, error } = await query;
 
       if (error) throw error;
-      return data;
+      setProperties(data || []);
     } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Error fetching properties",
         description: error.message,
       });
-      return null;
     } finally {
       setIsLoading(false);
     }
   };
 
-  // GET /properties/:id - Get single property
-  const getProperty = async (id: string) => {
+  return { properties, isLoading, refetch: fetchProperties };
+}
+
+export function useProperty(id: string) {
+  const [property, setProperty] = useState<Property | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (id) fetchProperty();
+  }, [id]);
+
+  const fetchProperty = async () => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase
@@ -68,30 +93,33 @@ export function useProperties() {
         .maybeSingle();
 
       if (error) throw error;
-      return data;
+      setProperty(data);
     } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Error fetching property",
         description: error.message,
       });
-      return null;
     } finally {
       setIsLoading(false);
     }
   };
 
-  // POST /properties - Create new property (seller/agent only)
-  const createProperty = async (property: PropertyInsert) => {
-    setIsLoading(true);
+  return { property, isLoading, refetch: fetchProperty };
+}
+
+export function usePropertyMutations() {
+  const { toast } = useToast();
+
+  const createProperty = async (propertyData: Omit<Property, "id" | "created_at" | "updated_at" | "owner_id">) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("You must be logged in to create a property");
+      if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
         .from("properties")
         .insert({
-          ...property,
+          ...propertyData,
           owner_id: user.id,
         })
         .select()
@@ -100,29 +128,26 @@ export function useProperties() {
       if (error) throw error;
 
       toast({
-        title: "Success!",
+        title: "Success",
         description: "Property created successfully",
       });
-      return data;
+
+      return { data, error: null };
     } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Error creating property",
         description: error.message,
       });
-      return null;
-    } finally {
-      setIsLoading(false);
+      return { data: null, error };
     }
   };
 
-  // PUT /properties/:id - Update property (owner only)
-  const updateProperty = async (id: string, updates: PropertyUpdate) => {
-    setIsLoading(true);
+  const updateProperty = async (id: string, propertyData: Partial<Property>) => {
     try {
       const { data, error } = await supabase
         .from("properties")
-        .update(updates)
+        .update(propertyData)
         .eq("id", id)
         .select()
         .single();
@@ -130,25 +155,22 @@ export function useProperties() {
       if (error) throw error;
 
       toast({
-        title: "Success!",
+        title: "Success",
         description: "Property updated successfully",
       });
-      return data;
+
+      return { data, error: null };
     } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Error updating property",
         description: error.message,
       });
-      return null;
-    } finally {
-      setIsLoading(false);
+      return { data: null, error };
     }
   };
 
-  // DELETE /properties/:id - Delete property (owner only)
   const deleteProperty = async (id: string) => {
-    setIsLoading(true);
     try {
       const { error } = await supabase
         .from("properties")
@@ -158,28 +180,20 @@ export function useProperties() {
       if (error) throw error;
 
       toast({
-        title: "Success!",
+        title: "Success",
         description: "Property deleted successfully",
       });
-      return true;
+
+      return { error: null };
     } catch (error: any) {
       toast({
         variant: "destructive",
         title: "Error deleting property",
         description: error.message,
       });
-      return false;
-    } finally {
-      setIsLoading(false);
+      return { error };
     }
   };
 
-  return {
-    isLoading,
-    getProperties,
-    getProperty,
-    createProperty,
-    updateProperty,
-    deleteProperty,
-  };
+  return { createProperty, updateProperty, deleteProperty };
 }
