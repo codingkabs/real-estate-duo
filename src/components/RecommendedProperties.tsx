@@ -1,9 +1,9 @@
-import { useRecommendedProperties } from "@/hooks/useRecommendedProperties";
+import { useRecommendations } from "@/hooks/useRecommendations";
 import PropertyCard from "./PropertyCard";
 import { Skeleton } from "./ui/skeleton";
 
 const RecommendedProperties = () => {
-  const { data: recommendations, isLoading } = useRecommendedProperties();
+  const { recommendations, isLoading } = useRecommendations();
 
   if (isLoading) {
     return (
@@ -20,7 +20,7 @@ const RecommendedProperties = () => {
     );
   }
 
-  if (!recommendations || recommendations.length === 0) {
+  if (recommendations.length === 0) {
     return null;
   }
 
@@ -35,14 +35,14 @@ const RecommendedProperties = () => {
           {recommendations.map((property) => (
             <div key={property.id} className="relative">
               <PropertyCard 
-                id={parseInt(property.id)}
+                id={property.id}
+                title={property.title}
                 image={property.images?.[0] || '/placeholder.svg'}
-                price={Number(property.price)}
+                price={property.price.toString()}
                 address={property.address}
                 beds={property.bedrooms}
                 baths={property.bathrooms}
                 sqft={property.area}
-                type="For Sale"
               />
               <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
                 {property.similarity_score}% match
