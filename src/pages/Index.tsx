@@ -66,7 +66,7 @@ const Index = () => {
             Take control of your real estate journey. Our platform empowers you to list your home on the MLS, attract qualified buyers, and close confidently — without paying thousands in commissions.
           </p>
           <Button size="lg" variant="secondary" asChild>
-            <a href="/signup/seller">Start Selling Now</a>
+            <a href="/signup">Start Selling Now</a>
           </Button>
         </div>
       </section>
@@ -144,7 +144,7 @@ const Index = () => {
             List your property with us and reach millions of potential buyers
           </p>
           <Button size="lg" variant="secondary" asChild>
-            <a href="/signup/seller">Get Started</a>
+            <a href="/signup">Get Started</a>
           </Button>
         </div>
       </section>
@@ -158,7 +158,7 @@ const Index = () => {
           
           <div className="flex justify-center mb-8">
             <Button size="lg" asChild>
-              <a href="/signup/seller">Try It Free Today</a>
+              <a href="/signup">Try It Free Today</a>
             </Button>
           </div>
           
@@ -294,7 +294,7 @@ const Index = () => {
 
           <div className="flex justify-center">
             <Button size="lg" asChild>
-              <a href="/signup/seller">List My Home on MLS Today</a>
+              <a href="/signup">List My Home on MLS Today</a>
             </Button>
           </div>
         </div>
@@ -313,7 +313,7 @@ const Index = () => {
               <p className="text-3xl font-bold text-primary mb-4">Free</p>
               <p className="text-muted-foreground mb-6">Basic listing, AI valuation, offer tracking</p>
               <Button className="w-full" variant="outline" asChild>
-                <a href="/signup/seller">Get Started for Free</a>
+                <a href="/signup">Get Started for Free</a>
               </Button>
             </div>
             
@@ -325,7 +325,7 @@ const Index = () => {
               <p className="text-3xl font-bold text-primary mb-4">$199<span className="text-lg text-muted-foreground">/month</span></p>
               <p className="text-muted-foreground mb-6">MLS listing, advanced marketing tools, legal support</p>
               <Button className="w-full" asChild>
-                <a href="/signup/seller">Start Pro</a>
+                <a href="/signup">Start Pro</a>
               </Button>
             </div>
             
@@ -334,7 +334,7 @@ const Index = () => {
               <p className="text-3xl font-bold text-primary mb-4">$499<span className="text-lg text-muted-foreground"> one-time</span></p>
               <p className="text-muted-foreground mb-6">All Pro features + personalized real estate coaching</p>
               <Button className="w-full" variant="outline" asChild>
-                <a href="/signup/seller">Go Premium</a>
+                <a href="/signup">Go Premium</a>
               </Button>
             </div>
           </div>
@@ -382,7 +382,7 @@ const Index = () => {
             Money Back Guarantee
           </p>
           <Button size="lg" variant="secondary" asChild>
-            <a href="/signup/seller">Start Selling Now</a>
+            <a href="/signup">Start Selling Now</a>
           </Button>
         </div>
       </section>

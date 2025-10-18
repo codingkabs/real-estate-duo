@@ -25,7 +25,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <Link to="/signup/seller">
+            <Link to="/signup">
               <Button variant="outline" size="sm">
                 List Property
               </Button>
@@ -35,7 +35,7 @@ const Navbar = () => {
                 Sign In
               </Button>
             </Link>
-            <Link to="/signup/buyer">
+            <Link to="/signup">
               <Button size="sm">
                 Sign Up
               </Button>
