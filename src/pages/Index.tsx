@@ -60,7 +60,7 @@ const Index = () => {
             Sell Your Home. Earn Your Commission. Be Your Own Agent.
           </h1>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Search millions of homes, apartments, and houses for sale or rent
+            Take control of your sale with our smart platform - no middleman, no hidden fees, just results.
           </p>
           
           <div className="max-w-3xl mx-auto bg-white rounded-lg p-2 shadow-2xl">
