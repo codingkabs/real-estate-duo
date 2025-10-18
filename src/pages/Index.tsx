@@ -60,7 +60,7 @@ const Index = () => {
             Sell Your Home. Earn Your Commission. Be Your Own Agent.
           </h1>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Take control of your sale with our smart platform - no middleman, no hidden fees, just results.
+            Take control of your real estate journey. Use our smart tools, AI guidance, and trusted resources to sell your home confidently - without paying thousands in commission.
           </p>
         </div>
       </section>
