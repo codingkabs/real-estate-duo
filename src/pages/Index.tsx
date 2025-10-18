@@ -62,19 +62,6 @@ const Index = () => {
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Take control of your sale with our smart platform - no middleman, no hidden fees, just results.
           </p>
-          
-          <div className="max-w-3xl mx-auto bg-white rounded-lg p-2 shadow-2xl">
-            <div className="flex gap-2">
-              <Input 
-                placeholder="Enter an address, neighborhood, city, or ZIP code"
-                className="flex-1 border-0 focus-visible:ring-0 text-lg"
-              />
-              <Button size="lg" className="gap-2">
-                <Search className="h-5 w-5" />
-                Search
-              </Button>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -90,6 +77,24 @@ const Index = () => {
             {featuredProperties.map((property) => (
               <PropertyCard key={property.id} {...property} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Search Section */}
+      <section className="py-12 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto bg-white rounded-lg p-2 shadow-xl">
+            <div className="flex gap-2">
+              <Input 
+                placeholder="Enter an address, neighborhood, city, or ZIP code"
+                className="flex-1 border-0 focus-visible:ring-0 text-lg"
+              />
+              <Button size="lg" className="gap-2">
+                <Search className="h-5 w-5" />
+                Search
+              </Button>
+            </div>
           </div>
         </div>
       </section>
