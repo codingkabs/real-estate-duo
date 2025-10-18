@@ -194,12 +194,59 @@ export type Database = {
           },
         ]
       }
+      property_views: {
+        Row: {
+          id: string
+          property_id: string
+          user_id: string
+          viewed_at: string
+        }
+        Insert: {
+          id?: string
+          property_id: string
+          user_id: string
+          viewed_at?: string
+        }
+        Update: {
+          id?: string
+          property_id?: string
+          user_id?: string
+          viewed_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_views_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_recommended_properties: {
+        Args: { p_user_id: string }
+        Returns: {
+          address: string
+          area: number
+          bathrooms: number
+          bedrooms: number
+          created_at: string
+          description: string
+          id: string
+          images: string[]
+          owner_id: string
+          price: number
+          similarity_score: number
+          status: Database["public"]["Enums"]["property_status"]
+          title: string
+          updated_at: string
+        }[]
+      }
     }
     Enums: {
       offer_status: "pending" | "accepted" | "rejected"
