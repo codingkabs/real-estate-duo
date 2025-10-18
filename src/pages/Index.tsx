@@ -75,30 +75,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Quick Benefits Section */}
-      <section className="py-16 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="text-center p-6">
-              <div className="text-4xl mb-4">💰</div>
-              <h3 className="text-xl font-bold text-foreground mb-2">Save Thousands</h3>
-              <p className="text-muted-foreground">Keep up to 6% that agents typically charge.</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="text-4xl mb-4">🤖</div>
-              <h3 className="text-xl font-bold text-foreground mb-2">AI-Powered Tools</h3>
-              <p className="text-muted-foreground">Smart pricing, listing optimization, and marketing guidance.</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="text-4xl mb-4">🏡</div>
-              <h3 className="text-xl font-bold text-foreground mb-2">Full MLS Access</h3>
-              <p className="text-muted-foreground">Professional exposure on state and national databases.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Featured Properties */}
       <section className="py-16">
