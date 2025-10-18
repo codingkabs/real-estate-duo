@@ -50,19 +50,23 @@ const Index = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
+      <section className="relative h-[600px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary via-primary/80 to-accent">
+        {/* Animated floating elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse" />
+          <div className="absolute top-40 right-20 w-48 h-48 bg-white/5 rounded-full blur-2xl animate-pulse delay-300" />
+          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-white/10 rounded-full blur-xl animate-pulse delay-700" />
+          <div className="absolute top-1/3 right-1/3 w-24 h-24 bg-white/5 rounded-full blur-lg animate-pulse delay-500" />
         </div>
         
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:50px_50px]" />
+        
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
             Sell Your Home. Earn Your Commission. Be Your Own Agent.
           </h1>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-white/95 mb-8 max-w-2xl mx-auto drop-shadow-md">
             Take control of your real estate journey. Our platform empowers you to list your home on the MLS, attract qualified buyers, and close confidently — without paying thousands in commissions.
           </p>
           <Button size="lg" variant="secondary" asChild>
