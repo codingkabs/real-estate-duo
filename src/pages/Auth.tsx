@@ -152,7 +152,7 @@ export default function Auth() {
         </Button>
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl text-center">Real Estate Platform</CardTitle>
+            <CardTitle className="text-2xl text-center">Own your sale - Ownsel</CardTitle>
             <CardDescription className="text-center">
               Sign in to your account or create a new one
             </CardDescription>
