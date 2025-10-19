@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <h3 className="font-bold text-foreground mb-4">Contact</h3>
-            <p className="text-muted-foreground">📧 info@linkfsbo.com</p>
+            <p className="text-muted-foreground">📧 info@ownsel.com</p>
           </div>
           
           <div>

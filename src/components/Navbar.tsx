@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <Home className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold text-foreground">LinkFSBO</span>
+            <span className="text-xl font-bold text-foreground">OwnSel</span>
           </Link>
           
           <div className="hidden md:flex items-center gap-6">

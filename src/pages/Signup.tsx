@@ -106,7 +106,7 @@ const Signup = () => {
 
         toast({
           title: "Account created!",
-          description: "Welcome to LinkFSBO. You can now start listing your property.",
+          description: "Welcome to OwnSel. You can now start listing your property.",
         });
         
         // Redirect to home page
@@ -131,7 +131,7 @@ const Signup = () => {
           <div className="flex h-16 items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
               <Home className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold text-foreground">LinkFSBO</span>
+              <span className="text-xl font-bold text-foreground">OwnSel</span>
             </Link>
             <Link to="/">
               <Button variant="ghost" size="sm" className="gap-2">
