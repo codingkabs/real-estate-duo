@@ -30,42 +30,30 @@ const Index = () => {
       {/* Hero Section */}
       <section className="relative min-h-[600px] flex items-center overflow-hidden bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left: Content */}
-            <div className="py-12 lg:py-0">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-                Sell your home yourself — confidently
-              </h1>
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-                Ownsel gives you the same tools agents use — smart pricing, AI-guided listings, and full legal support — without the 6% commission.
-              </p>
-              
-              {/* Address Input */}
-              <div className="mb-6">
-                <Input 
-                  placeholder="Enter your address to start your listing"
-                  className="h-14 text-base px-6 bg-white border-2"
-                />
-              </div>
-              
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 items-start">
-                <Button size="lg" className="w-full sm:w-auto h-14 px-8 text-base font-semibold" asChild>
-                  <a href="/signup">LIST MY HOME FREE</a>
-                </Button>
-                <Button size="lg" variant="ghost" className="w-full sm:w-auto h-14 px-8 text-base font-semibold" asChild>
-                  <a href="#pricing">HOW IT WORKS</a>
-                </Button>
-              </div>
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+              Sell your home yourself — confidently
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
+              Ownsel gives you the same tools agents use — smart pricing, AI-guided listings, and full legal support — without the 6% commission.
+            </p>
+            
+            {/* Address Input */}
+            <div className="mb-6 max-w-2xl mx-auto">
+              <Input 
+                placeholder="Enter your address to start your listing"
+                className="h-14 text-base px-6 bg-white border-2"
+              />
             </div>
             
-            {/* Right: Image */}
-            <div className="relative">
-              <img 
-                src={heroHomeImage} 
-                alt="Happy couple holding SOLD sign in front of their home" 
-                className="rounded-2xl shadow-2xl w-full object-cover"
-              />
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+              <Button size="lg" className="w-full sm:w-auto h-14 px-8 text-base font-semibold" asChild>
+                <a href="/signup">LIST MY HOME FREE</a>
+              </Button>
+              <Button size="lg" variant="ghost" className="w-full sm:w-auto h-14 px-8 text-base font-semibold" asChild>
+                <a href="#pricing">HOW IT WORKS</a>
+              </Button>
             </div>
           </div>
         </div>
