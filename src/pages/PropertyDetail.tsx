@@ -11,6 +11,7 @@ import MessagingPanel from "@/components/MessagingPanel";
 import { OffersList } from "@/components/OffersList";
 import RecommendedProperties from "@/components/RecommendedProperties";
 
+
 const PropertyDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
