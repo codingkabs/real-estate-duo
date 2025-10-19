@@ -119,21 +119,27 @@ const SignupBuyer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <Card className="border-none shadow-lg p-8">
-          <div className="space-y-1 mb-6">
-            <h1 className="text-3xl font-normal text-center">Create Buyer Account</h1>
-            <p className="text-center text-muted-foreground">
-              Already have an account?{" "}
-              <Link to="/auth" className="text-primary hover:underline font-medium">
-                Sign in
-              </Link>
-            </p>
+        <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors">
+          <ArrowLeft className="h-4 w-4" />
+          Back to home
+        </Link>
+        
+        <Card className="p-8">
+          <div className="flex items-center gap-2 mb-6">
+            <Home className="h-6 w-6 text-primary" />
+            <span className="text-xl font-bold">OwnSel</span>
           </div>
+          
+          <h1 className="text-2xl font-bold mb-2">Create Buyer Account</h1>
+          <p className="text-muted-foreground mb-4">
+            Start your journey to finding your dream home
+          </p>
+
+          <p className="text-sm italic text-muted-foreground mb-6">All fields required.</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <p className="text-sm text-muted-foreground">All fields required.</p>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Input 
@@ -141,7 +147,7 @@ const SignupBuyer = () => {
                   placeholder="First Name" 
                   value={formData.firstName}
                   onChange={(e) => handleInputChange('firstName', e.target.value)}
-                  className="h-12 bg-muted border-none"
+                  className="bg-muted"
                   required 
                 />
                 {errors.firstName && <p className="text-sm text-destructive">{errors.firstName}</p>}
@@ -152,7 +158,7 @@ const SignupBuyer = () => {
                   placeholder="Last Name" 
                   value={formData.lastName}
                   onChange={(e) => handleInputChange('lastName', e.target.value)}
-                  className="h-12 bg-muted border-none"
+                  className="bg-muted"
                   required 
                 />
                 {errors.lastName && <p className="text-sm text-destructive">{errors.lastName}</p>}
@@ -166,7 +172,7 @@ const SignupBuyer = () => {
                 placeholder="Email" 
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
-                className="h-12 bg-muted border-none"
+                className="bg-muted"
                 required 
               />
               {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
@@ -179,7 +185,7 @@ const SignupBuyer = () => {
                 placeholder="Create Password" 
                 value={formData.password}
                 onChange={(e) => handleInputChange('password', e.target.value)}
-                className="h-12 bg-muted border-none"
+                className="bg-muted"
                 required 
               />
               {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
@@ -192,7 +198,7 @@ const SignupBuyer = () => {
                 placeholder="Confirm Password" 
                 value={formData.confirmPassword}
                 onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                className="h-12 bg-muted border-none"
+                className="bg-muted"
                 required 
               />
               {errors.confirmPassword && <p className="text-sm text-destructive">{errors.confirmPassword}</p>}
@@ -205,7 +211,7 @@ const SignupBuyer = () => {
                 placeholder="Phone Number" 
                 value={formData.phone}
                 onChange={(e) => handleInputChange('phone', e.target.value)}
-                className="h-12 bg-muted border-none"
+                className="bg-muted"
                 required 
               />
               {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
@@ -234,28 +240,25 @@ const SignupBuyer = () => {
             </div>
             {errors.acceptedTerms && <p className="text-sm text-destructive">{errors.acceptedTerms}</p>}
 
-            <Button className="w-full h-12 text-base" type="submit" disabled={isLoading}>
+            <Button className="w-full" size="lg" type="submit" disabled={isLoading}>
               {isLoading ? "Creating Account..." : "Create Account"}
             </Button>
           </form>
 
           <div className="mt-6 text-center text-sm">
+            <span className="text-muted-foreground">Already have an account? </span>
+            <Link to="/login" className="text-primary hover:underline font-medium">
+              Sign in
+            </Link>
+          </div>
+
+          <div className="mt-4 text-center text-sm">
             <span className="text-muted-foreground">Want to sell? </span>
             <Link to="/signup/seller" className="text-primary hover:underline font-medium">
               Create seller account
             </Link>
           </div>
         </Card>
-        
-        <div className="mt-8 text-center">
-          <Link 
-            to="/" 
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <Home className="h-4 w-4" />
-            Back to home
-          </Link>
-        </div>
       </div>
     </div>
   );
