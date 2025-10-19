@@ -1,1 +1,4 @@
 project_id = "mdgroomzvgqdwtxyfsrs"
+
+[functions.generate-property-description]
+verify_jwt = false

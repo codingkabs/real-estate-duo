@@ -14,6 +14,9 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { Sparkles } from "lucide-react";
 
 const propertySchema = z.object({
   title: z.string().trim().min(5, "Title must be at least 5 characters").max(200),
@@ -34,6 +37,8 @@ export default function CreateProperty() {
   const { uploadMultipleImages, isUploading } = usePropertyImages();
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const { toast } = useToast();
 
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertySchema),
@@ -51,6 +56,53 @@ export default function CreateProperty() {
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     setSelectedFiles(files);
+  };
+
+  const generateDescription = async () => {
+    const values = form.getValues();
+    
+    // Validate required fields for description generation
+    if (!values.title || !values.address || !values.price || !values.bedrooms || !values.bathrooms || !values.area) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all property details before generating a description.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-property-description', {
+        body: {
+          title: values.title,
+          address: values.address,
+          price: values.price,
+          bedrooms: values.bedrooms,
+          bathrooms: values.bathrooms,
+          area: values.area,
+        }
+      });
+
+      if (error) throw error;
+
+      if (data?.description) {
+        form.setValue('description', data.description);
+        toast({
+          title: "Description Generated",
+          description: "AI has created a property description for you!",
+        });
+      }
+    } catch (error) {
+      console.error("Error generating description:", error);
+      toast({
+        title: "Generation Failed",
+        description: "Failed to generate description. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const onSubmit = async (data: PropertyFormData) => {
@@ -139,7 +191,20 @@ export default function CreateProperty() {
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Description</FormLabel>
+                      <div className="flex items-center justify-between">
+                        <FormLabel>Description</FormLabel>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={generateDescription}
+                          disabled={isGenerating}
+                          className="gap-2"
+                        >
+                          <Sparkles className="h-4 w-4" />
+                          {isGenerating ? "Generating..." : "AI Generate"}
+                        </Button>
+                      </div>
                       <FormControl>
                         <Textarea placeholder="Describe your property..." rows={4} {...field} />
                       </FormControl>
