@@ -1,4 +1,5 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { Bed, Bath, Square, MapPin, Heart, Share2, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -10,12 +11,20 @@ import { MakeOfferDialog } from "@/components/MakeOfferDialog";
 import MessagingPanel from "@/components/MessagingPanel";
 import { OffersList } from "@/components/OffersList";
 import RecommendedProperties from "@/components/RecommendedProperties";
+import { trackPropertyView } from "@/hooks/useRecommendedProperties";
 
 const PropertyDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { property, isLoading } = useProperty(id || "");
   const { user } = useAuth();
+
+  // Track property view for recommendations
+  useEffect(() => {
+    if (property && user) {
+      trackPropertyView(property.id);
+    }
+  }, [property?.id, user]);
 
   if (isLoading) {
     return (
