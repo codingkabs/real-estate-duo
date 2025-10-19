@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Home } from "lucide-react";
+import { Home, Eye, EyeOff } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -40,6 +40,9 @@ export default function Auth() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [showSignInPassword, setShowSignInPassword] = useState(false);
+  const [showSignUpPassword, setShowSignUpPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const signUpForm = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
@@ -185,7 +188,27 @@ export default function Auth() {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input type="password" placeholder="Password" className="bg-muted" {...field} />
+                          <div className="relative">
+                            <Input 
+                              type={showSignInPassword ? "text" : "password"} 
+                              placeholder="Password" 
+                              className="bg-muted pr-10" 
+                              {...field} 
+                            />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                              onClick={() => setShowSignInPassword(!showSignInPassword)}
+                            >
+                              {showSignInPassword ? (
+                                <EyeOff className="h-4 w-4 text-muted-foreground" />
+                              ) : (
+                                <Eye className="h-4 w-4 text-muted-foreground" />
+                              )}
+                            </Button>
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -246,7 +269,27 @@ export default function Auth() {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input type="password" placeholder="Create Password" className="bg-muted" {...field} />
+                          <div className="relative">
+                            <Input 
+                              type={showSignUpPassword ? "text" : "password"} 
+                              placeholder="Create Password" 
+                              className="bg-muted pr-10" 
+                              {...field} 
+                            />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                              onClick={() => setShowSignUpPassword(!showSignUpPassword)}
+                            >
+                              {showSignUpPassword ? (
+                                <EyeOff className="h-4 w-4 text-muted-foreground" />
+                              ) : (
+                                <Eye className="h-4 w-4 text-muted-foreground" />
+                              )}
+                            </Button>
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -258,7 +301,27 @@ export default function Auth() {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <Input type="password" placeholder="Confirm Password" className="bg-muted" {...field} />
+                          <div className="relative">
+                            <Input 
+                              type={showConfirmPassword ? "text" : "password"} 
+                              placeholder="Confirm Password" 
+                              className="bg-muted pr-10" 
+                              {...field} 
+                            />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            >
+                              {showConfirmPassword ? (
+                                <EyeOff className="h-4 w-4 text-muted-foreground" />
+                              ) : (
+                                <Eye className="h-4 w-4 text-muted-foreground" />
+                              )}
+                            </Button>
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
