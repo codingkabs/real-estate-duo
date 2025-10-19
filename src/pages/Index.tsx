@@ -1,50 +1,26 @@
+import { useState } from "react";
 import { Search, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import Navbar from "@/components/Navbar";
 import PropertyCard from "@/components/PropertyCard";
 import FloatingChatButton from "@/components/FloatingChatButton";
-import heroImage from "@/assets/hero-home.jpg";
-import property1 from "@/assets/property-1.jpg";
-import property2 from "@/assets/property-2.jpg";
-import property3 from "@/assets/property-3.jpg";
 import soldHomeImage from "@/assets/sold-home-success.jpg";
 import founderImage from "@/assets/founder.png";
 import Footer from "@/components/Footer";
+import { useProperties, PropertyFilters } from "@/hooks/useProperties";
+import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
-  const featuredProperties = [
-    {
-      id: 1,
-      image: property1,
-      price: 485000,
-      address: "123 Maple Street, San Francisco, CA",
-      beds: 3,
-      baths: 2,
-      sqft: 2100,
-      type: "For Sale"
-    },
-    {
-      id: 2,
-      image: property2,
-      price: 725000,
-      address: "456 Ocean Avenue, Los Angeles, CA",
-      beds: 4,
-      baths: 3,
-      sqft: 2850,
-      type: "For Sale"
-    },
-    {
-      id: 3,
-      image: property3,
-      price: 395000,
-      address: "789 Park Lane, Seattle, WA",
-      beds: 2,
-      baths: 2,
-      sqft: 1600,
-      type: "For Sale"
-    }
-  ];
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState<PropertyFilters>({});
+  const { properties, isLoading } = useProperties(filters);
+  const { user } = useAuth();
+
+  const handleSearch = () => {
+    setFilters({ ...filters, city: searchQuery });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -91,8 +67,11 @@ const Index = () => {
                 <Input 
                   placeholder="Enter an address, neighborhood, city, or ZIP code"
                   className="flex-1 border-0 focus-visible:ring-0 text-lg"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 />
-                <Button size="lg" className="gap-2">
+                <Button size="lg" className="gap-2" onClick={handleSearch}>
                   <Search className="h-5 w-5" />
                   Search
                 </Button>
@@ -100,11 +79,39 @@ const Index = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredProperties.map((property) => (
-              <PropertyCard key={property.id} {...property} />
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <Skeleton key={i} className="h-[400px] rounded-lg" />
+              ))}
+            </div>
+          ) : properties.length === 0 ? (
+            <div className="text-center py-12">
+              <h3 className="text-2xl font-bold text-foreground mb-4">No properties available yet</h3>
+              <p className="text-muted-foreground mb-6">Be the first to list your property!</p>
+              {user && (
+                <Button asChild>
+                  <a href="/create-property">List Your Property</a>
+                </Button>
+              )}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {properties.map((property) => (
+                <PropertyCard 
+                  key={property.id} 
+                  id={property.id}
+                  title={property.title}
+                  image={property.images?.[0] || '/placeholder.svg'}
+                  price={property.price.toString()}
+                  address={property.address}
+                  beds={property.bedrooms}
+                  baths={property.bathrooms}
+                  sqft={property.area}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

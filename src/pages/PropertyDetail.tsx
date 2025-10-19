@@ -1,73 +1,56 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Bed, Bath, Square, MapPin, Heart, Share2, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import Navbar from "@/components/Navbar";
-import property1 from "@/assets/property-1.jpg";
-import property2 from "@/assets/property-2.jpg";
-import property3 from "@/assets/property-3.jpg";
+import { useProperty } from "@/hooks/useProperties";
+import { useAuth } from "@/hooks/useAuth";
+import { MakeOfferDialog } from "@/components/MakeOfferDialog";
+import MessagingPanel from "@/components/MessagingPanel";
+import { OffersList } from "@/components/OffersList";
+import RecommendedProperties from "@/components/RecommendedProperties";
 
 const PropertyDetail = () => {
   const { id } = useParams();
-  
-  const properties = {
-    "1": {
-      image: property1,
-      price: 485000,
-      address: "123 Maple Street",
-      city: "San Francisco, CA 94102",
-      beds: 3,
-      baths: 2,
-      sqft: 2100,
-      description: "Beautiful two-story home in a desirable neighborhood. Features modern updates throughout, spacious backyard, and attached garage. Close to schools, parks, and shopping.",
-      features: [
-        "Central heating and cooling",
-        "Hardwood floors",
-        "Updated kitchen with granite countertops",
-        "Master suite with walk-in closet",
-        "Large backyard with patio",
-        "2-car attached garage"
-      ]
-    },
-    "2": {
-      image: property2,
-      price: 725000,
-      address: "456 Ocean Avenue",
-      city: "Los Angeles, CA 90025",
-      beds: 4,
-      baths: 3,
-      sqft: 2850,
-      description: "Stunning modern apartment in prime location. Floor-to-ceiling windows with spectacular city views. Building amenities include fitness center, pool, and concierge service.",
-      features: [
-        "Floor-to-ceiling windows",
-        "Stainless steel appliances",
-        "In-unit washer/dryer",
-        "Building fitness center",
-        "Rooftop pool and lounge",
-        "24-hour concierge"
-      ]
-    },
-    "3": {
-      image: property3,
-      price: 395000,
-      address: "789 Park Lane",
-      city: "Seattle, WA 98101",
-      beds: 2,
-      baths: 2,
-      sqft: 1600,
-      description: "Charming townhouse with contemporary finishes. Open floor plan perfect for entertaining. Includes private outdoor space and additional storage.",
-      features: [
-        "Open concept living",
-        "Quartz countertops",
-        "Custom cabinetry",
-        "Private patio",
-        "Additional storage unit",
-        "HOA maintained exterior"
-      ]
-    }
-  };
+  const navigate = useNavigate();
+  const { property, isLoading } = useProperty(id || "");
+  const { user } = useAuth();
 
-  const property = properties[id as keyof typeof properties] || properties["1"];
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <div className="container mx-auto px-4 py-8">
+          <Skeleton className="h-8 w-32 mb-6" />
+          <div className="grid lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-6">
+              <Skeleton className="aspect-video w-full rounded-lg" />
+              <Skeleton className="h-24 w-full" />
+              <Skeleton className="h-48 w-full" />
+            </div>
+            <Skeleton className="h-96 w-full" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!property) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <div className="container mx-auto px-4 py-8 text-center">
+          <h1 className="text-3xl font-bold mb-4">Property Not Found</h1>
+          <p className="text-muted-foreground mb-6">The property you're looking for doesn't exist or has been removed.</p>
+          <Button onClick={() => navigate("/")}>Back to Home</Button>
+        </div>
+      </div>
+    );
+  }
+
+  const isOwner = user?.id === property.owner_id;
+  const propertyImage = property.images?.[0] || '/placeholder.svg';
 
   return (
     <div className="min-h-screen bg-background">
@@ -83,8 +66,8 @@ const PropertyDetail = () => {
           <div className="lg:col-span-2 space-y-6">
             <div className="aspect-video overflow-hidden rounded-lg">
               <img 
-                src={property.image} 
-                alt={property.address}
+                src={propertyImage} 
+                alt={property.title}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -96,7 +79,7 @@ const PropertyDetail = () => {
                 </h1>
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <MapPin className="h-4 w-4" />
-                  <p>{property.address}, {property.city}</p>
+                  <p>{property.address}</p>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -112,17 +95,17 @@ const PropertyDetail = () => {
             <div className="flex items-center gap-6 text-lg">
               <div className="flex items-center gap-2">
                 <Bed className="h-5 w-5 text-muted-foreground" />
-                <span className="font-semibold">{property.beds}</span>
+                <span className="font-semibold">{property.bedrooms}</span>
                 <span className="text-muted-foreground">Bedrooms</span>
               </div>
               <div className="flex items-center gap-2">
                 <Bath className="h-5 w-5 text-muted-foreground" />
-                <span className="font-semibold">{property.baths}</span>
+                <span className="font-semibold">{property.bathrooms}</span>
                 <span className="text-muted-foreground">Bathrooms</span>
               </div>
               <div className="flex items-center gap-2">
                 <Square className="h-5 w-5 text-muted-foreground" />
-                <span className="font-semibold">{property.sqft.toLocaleString()}</span>
+                <span className="font-semibold">{property.area.toLocaleString()}</span>
                 <span className="text-muted-foreground">sqft</span>
               </div>
             </div>
@@ -130,53 +113,55 @@ const PropertyDetail = () => {
             <Card className="p-6">
               <h2 className="text-xl font-bold mb-4">About This Home</h2>
               <p className="text-muted-foreground leading-relaxed">
-                {property.description}
+                {property.description || property.title}
               </p>
             </Card>
 
-            <Card className="p-6">
-              <h2 className="text-xl font-bold mb-4">Features</h2>
-              <ul className="grid md:grid-cols-2 gap-3">
-                {property.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <span className="text-primary mt-1">✓</span>
-                    <span className="text-muted-foreground">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
+            {isOwner && (
+              <OffersList propertyId={property.id} isOwner={true} />
+            )}
+
+            {!isOwner && user && (
+              <MessagingPanel 
+                propertyId={property.id} 
+                receiverId={property.owner_id} 
+                title="Message Seller"
+              />
+            )}
           </div>
 
           <div>
             <Card className="p-6 sticky top-24">
-              <h3 className="text-lg font-bold mb-4">Contact Agent</h3>
-              <form className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone"
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-                <textarea
-                  placeholder="Message"
-                  rows={4}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  defaultValue="I'm interested in this property."
-                />
-                <Button className="w-full">Request Information</Button>
-              </form>
+              {isOwner ? (
+                <div>
+                  <h3 className="text-lg font-bold mb-4">Your Listing</h3>
+                  <p className="text-muted-foreground mb-4">This is your property listing.</p>
+                  <Button className="w-full" variant="outline" onClick={() => navigate('/create-property')}>
+                    Edit Property
+                  </Button>
+                </div>
+              ) : user ? (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-bold mb-4">Interested?</h3>
+                  <MakeOfferDialog 
+                    propertyId={property.id} 
+                    propertyPrice={Number(property.price)}
+                  />
+                </div>
+              ) : (
+                <div>
+                  <h3 className="text-lg font-bold mb-4">Get Started</h3>
+                  <p className="text-muted-foreground mb-4">Sign in to make an offer or contact the seller.</p>
+                  <Button className="w-full" onClick={() => navigate('/auth')}>
+                    Sign In
+                  </Button>
+                </div>
+              )}
             </Card>
           </div>
         </div>
+
+        <RecommendedProperties />
       </div>
     </div>
   );
