@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import PropertyCard from "@/components/PropertyCard";
 import FloatingChatButton from "@/components/FloatingChatButton";
 import soldHomeImage from "@/assets/sold-home-success.jpg";
+import heroHomeImage from "@/assets/hero-home.jpg";
 import founderImage from "@/assets/founder.png";
 import Footer from "@/components/Footer";
 import { useProperties, PropertyFilters } from "@/hooks/useProperties";
@@ -27,28 +28,46 @@ const Index = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative h-[600px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary via-primary/80 to-accent">
-        {/* Animated floating elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse" />
-          <div className="absolute top-40 right-20 w-48 h-48 bg-white/5 rounded-full blur-2xl animate-pulse delay-300" />
-          <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-white/10 rounded-full blur-xl animate-pulse delay-700" />
-          <div className="absolute top-1/3 right-1/3 w-24 h-24 bg-white/5 rounded-full blur-lg animate-pulse delay-500" />
-        </div>
-        
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:50px_50px]" />
-        
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
-            Sell Your Home. Keep Your Commission.
-          </h1>
-          <p className="text-xl text-white/95 mb-8 max-w-2xl mx-auto drop-shadow-md">
-            List on the MLS, attract qualified buyers, and close confidently — without paying agent commissions.
-          </p>
-          <Button size="lg" variant="secondary" asChild>
-            <a href="/signup">Start Selling Now</a>
-          </Button>
+      <section className="relative min-h-[600px] flex items-center overflow-hidden bg-background">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left: Content */}
+            <div className="py-12 lg:py-0">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+                Sell your home yourself — confidently
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
+                Ownsel gives you the same tools agents use — smart pricing, AI-guided listings, and full legal support — without the 6% commission.
+              </p>
+              
+              {/* Address Input */}
+              <div className="mb-6">
+                <Input 
+                  placeholder="Enter your address to start your listing"
+                  className="h-14 text-base px-6 bg-white border-2"
+                />
+              </div>
+              
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 items-start">
+                <Button size="lg" className="w-full sm:w-auto h-14 px-8 text-base font-semibold" asChild>
+                  <a href="/signup">LIST MY HOME FREE</a>
+                </Button>
+                <Button size="lg" variant="ghost" className="w-full sm:w-auto h-14 px-8 text-base font-semibold" asChild>
+                  <a href="#pricing">HOW IT WORKS</a>
+                </Button>
+              </div>
+            </div>
+            
+            {/* Right: Image */}
+            <div className="relative">
+              <img 
+                src={heroHomeImage} 
+                alt="Happy couple holding SOLD sign in front of their home" 
+                className="rounded-2xl shadow-2xl w-full object-cover"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
