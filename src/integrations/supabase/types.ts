@@ -140,49 +140,265 @@ export type Database = {
       }
       properties: {
         Row: {
+          accessibility_features: string[] | null
+          additional_structures: string[] | null
           address: string
+          annual_tax_amount: number | null
+          appliances_included: string[] | null
+          architectural_style: string | null
           area: number
+          attached_garage_spaces: number | null
+          attic_features: string | null
+          basement_features: string[] | null
           bathrooms: number
           bedrooms: number
+          common_walls: boolean | null
+          community_features: string[] | null
+          cooling_types: string[] | null
           created_at: string
           description: string | null
+          dining_room_features: string[] | null
+          electric_details: string | null
+          energy_efficient_items: string[] | null
+          energy_generation: string[] | null
+          exterior_features: string[] | null
+          exterior_materials: string[] | null
+          fencing_features: string[] | null
+          finished_area_above_ground: number | null
+          finished_area_below_ground: number | null
+          fireplace_count: number | null
+          fireplace_features: string[] | null
+          flooring_types: string[] | null
+          foundation_type: string | null
+          full_bathrooms: number | null
+          half_bathrooms: number | null
+          has_hoa: boolean | null
+          has_uncovered_spaces: boolean | null
+          has_view: boolean | null
+          heating_types: string[] | null
+          hoa_fee_amount: number | null
+          hoa_fee_frequency: string | null
+          hoa_phone: string | null
+          hoa_services: string[] | null
+          home_type: string | null
+          horse_amenities: string[] | null
           id: string
           images: string[] | null
+          interior_features: string[] | null
+          is_new_construction: boolean | null
+          kitchen_features: string[] | null
+          laundry_features: string[] | null
+          lot_dimensions: string | null
+          lot_features: string[] | null
+          lot_size_acres: number | null
           owner_id: string
+          ownership_type: string | null
+          parcel_number: string | null
+          parking_features: string[] | null
+          patio_porch_features: string[] | null
+          pool_features: string[] | null
           price: number
+          primary_bathroom_features: string[] | null
+          primary_bedroom_features: string[] | null
+          primary_bedroom_level: string | null
+          property_levels: string | null
+          property_subtype: string | null
+          road_surface_type: string | null
+          roof_type: string | null
+          room_types: string[] | null
+          security_features: string[] | null
+          sewer_type: string | null
+          spa_features: string[] | null
           status: Database["public"]["Enums"]["property_status"]
+          stories: number | null
+          subdivision_name: string | null
+          tax_assessed_value: number | null
           title: string
+          total_parking_spaces: number | null
+          total_structure_area: number | null
           updated_at: string
+          utilities_available: string[] | null
+          view_description: string | null
+          virtual_tour_url: string | null
+          virtual_tour_url_2: string | null
+          water_source: string | null
+          waterfront_features: string[] | null
+          window_features: string[] | null
+          year_built: number | null
         }
         Insert: {
+          accessibility_features?: string[] | null
+          additional_structures?: string[] | null
           address: string
+          annual_tax_amount?: number | null
+          appliances_included?: string[] | null
+          architectural_style?: string | null
           area: number
+          attached_garage_spaces?: number | null
+          attic_features?: string | null
+          basement_features?: string[] | null
           bathrooms: number
           bedrooms: number
+          common_walls?: boolean | null
+          community_features?: string[] | null
+          cooling_types?: string[] | null
           created_at?: string
           description?: string | null
+          dining_room_features?: string[] | null
+          electric_details?: string | null
+          energy_efficient_items?: string[] | null
+          energy_generation?: string[] | null
+          exterior_features?: string[] | null
+          exterior_materials?: string[] | null
+          fencing_features?: string[] | null
+          finished_area_above_ground?: number | null
+          finished_area_below_ground?: number | null
+          fireplace_count?: number | null
+          fireplace_features?: string[] | null
+          flooring_types?: string[] | null
+          foundation_type?: string | null
+          full_bathrooms?: number | null
+          half_bathrooms?: number | null
+          has_hoa?: boolean | null
+          has_uncovered_spaces?: boolean | null
+          has_view?: boolean | null
+          heating_types?: string[] | null
+          hoa_fee_amount?: number | null
+          hoa_fee_frequency?: string | null
+          hoa_phone?: string | null
+          hoa_services?: string[] | null
+          home_type?: string | null
+          horse_amenities?: string[] | null
           id?: string
           images?: string[] | null
+          interior_features?: string[] | null
+          is_new_construction?: boolean | null
+          kitchen_features?: string[] | null
+          laundry_features?: string[] | null
+          lot_dimensions?: string | null
+          lot_features?: string[] | null
+          lot_size_acres?: number | null
           owner_id: string
+          ownership_type?: string | null
+          parcel_number?: string | null
+          parking_features?: string[] | null
+          patio_porch_features?: string[] | null
+          pool_features?: string[] | null
           price: number
+          primary_bathroom_features?: string[] | null
+          primary_bedroom_features?: string[] | null
+          primary_bedroom_level?: string | null
+          property_levels?: string | null
+          property_subtype?: string | null
+          road_surface_type?: string | null
+          roof_type?: string | null
+          room_types?: string[] | null
+          security_features?: string[] | null
+          sewer_type?: string | null
+          spa_features?: string[] | null
           status?: Database["public"]["Enums"]["property_status"]
+          stories?: number | null
+          subdivision_name?: string | null
+          tax_assessed_value?: number | null
           title: string
+          total_parking_spaces?: number | null
+          total_structure_area?: number | null
           updated_at?: string
+          utilities_available?: string[] | null
+          view_description?: string | null
+          virtual_tour_url?: string | null
+          virtual_tour_url_2?: string | null
+          water_source?: string | null
+          waterfront_features?: string[] | null
+          window_features?: string[] | null
+          year_built?: number | null
         }
         Update: {
+          accessibility_features?: string[] | null
+          additional_structures?: string[] | null
           address?: string
+          annual_tax_amount?: number | null
+          appliances_included?: string[] | null
+          architectural_style?: string | null
           area?: number
+          attached_garage_spaces?: number | null
+          attic_features?: string | null
+          basement_features?: string[] | null
           bathrooms?: number
           bedrooms?: number
+          common_walls?: boolean | null
+          community_features?: string[] | null
+          cooling_types?: string[] | null
           created_at?: string
           description?: string | null
+          dining_room_features?: string[] | null
+          electric_details?: string | null
+          energy_efficient_items?: string[] | null
+          energy_generation?: string[] | null
+          exterior_features?: string[] | null
+          exterior_materials?: string[] | null
+          fencing_features?: string[] | null
+          finished_area_above_ground?: number | null
+          finished_area_below_ground?: number | null
+          fireplace_count?: number | null
+          fireplace_features?: string[] | null
+          flooring_types?: string[] | null
+          foundation_type?: string | null
+          full_bathrooms?: number | null
+          half_bathrooms?: number | null
+          has_hoa?: boolean | null
+          has_uncovered_spaces?: boolean | null
+          has_view?: boolean | null
+          heating_types?: string[] | null
+          hoa_fee_amount?: number | null
+          hoa_fee_frequency?: string | null
+          hoa_phone?: string | null
+          hoa_services?: string[] | null
+          home_type?: string | null
+          horse_amenities?: string[] | null
           id?: string
           images?: string[] | null
+          interior_features?: string[] | null
+          is_new_construction?: boolean | null
+          kitchen_features?: string[] | null
+          laundry_features?: string[] | null
+          lot_dimensions?: string | null
+          lot_features?: string[] | null
+          lot_size_acres?: number | null
           owner_id?: string
+          ownership_type?: string | null
+          parcel_number?: string | null
+          parking_features?: string[] | null
+          patio_porch_features?: string[] | null
+          pool_features?: string[] | null
           price?: number
+          primary_bathroom_features?: string[] | null
+          primary_bedroom_features?: string[] | null
+          primary_bedroom_level?: string | null
+          property_levels?: string | null
+          property_subtype?: string | null
+          road_surface_type?: string | null
+          roof_type?: string | null
+          room_types?: string[] | null
+          security_features?: string[] | null
+          sewer_type?: string | null
+          spa_features?: string[] | null
           status?: Database["public"]["Enums"]["property_status"]
+          stories?: number | null
+          subdivision_name?: string | null
+          tax_assessed_value?: number | null
           title?: string
+          total_parking_spaces?: number | null
+          total_structure_area?: number | null
           updated_at?: string
+          utilities_available?: string[] | null
+          view_description?: string | null
+          virtual_tour_url?: string | null
+          virtual_tour_url_2?: string | null
+          water_source?: string | null
+          waterfront_features?: string[] | null
+          window_features?: string[] | null
+          year_built?: number | null
         }
         Relationships: [
           {
