@@ -1,23 +1,31 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Home } from "lucide-react";
-import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 const signUpSchema = z.object({
-  fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
+  firstName: z.string().trim().min(1, "First name is required").max(50),
+  lastName: z.string().trim().min(1, "Last name is required").max(50),
   email: z.string().trim().email("Invalid email address").max(255),
-  password: z.string().min(6, "Password must be at least 6 characters").max(100),
-  phone: z.string().trim().optional(),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  confirmPassword: z.string(),
+  phone: z.string().trim().min(10, "Phone number must be at least 10 digits").max(20),
+  acceptedTerms: z.boolean().refine((val) => val === true, {
+    message: "You must accept the Terms of Use and Privacy Policy",
+  }),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
 });
 
 const signInSchema = z.object({
@@ -36,10 +44,13 @@ export default function Auth() {
   const signUpForm = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      fullName: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
+      confirmPassword: "",
       phone: "",
+      acceptedTerms: false,
     },
   });
 
@@ -76,8 +87,8 @@ export default function Auth() {
         options: {
           emailRedirectTo: `${window.location.origin}/welcome`,
           data: {
-            full_name: data.fullName,
-            phone: data.phone || null,
+            full_name: `${data.firstName} ${data.lastName}`,
+            phone: data.phone,
             role: 'buyer',
           },
         },
@@ -161,9 +172,8 @@ export default function Auth() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input type="email" placeholder="your@email.com" {...field} />
+                          <Input type="email" placeholder="Email" className="bg-muted" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -174,9 +184,8 @@ export default function Auth() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input type="password" placeholder="••••••••" {...field} />
+                          <Input type="password" placeholder="Password" className="bg-muted" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -190,42 +199,42 @@ export default function Auth() {
             </TabsContent>
 
             <TabsContent value="signup">
+              <p className="text-sm italic text-muted-foreground mb-4">All fields required.</p>
               <Form {...signUpForm}>
                 <form onSubmit={signUpForm.handleSubmit(handleSignUp)} className="space-y-4">
-                  <FormField
-                    control={signUpForm.control}
-                    name="fullName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Full Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="John Doe" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                      control={signUpForm.control}
+                      name="firstName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input placeholder="First Name" className="bg-muted" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={signUpForm.control}
+                      name="lastName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input placeholder="Last Name" className="bg-muted" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                   <FormField
                     control={signUpForm.control}
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input type="email" placeholder="your@email.com" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={signUpForm.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Phone (Optional)</FormLabel>
-                        <FormControl>
-                          <Input type="tel" placeholder="+1 234 567 8900" {...field} />
+                          <Input type="email" placeholder="Email" className="bg-muted" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -236,10 +245,59 @@ export default function Auth() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input type="password" placeholder="••••••••" {...field} />
+                          <Input type="password" placeholder="Create Password" className="bg-muted" {...field} />
                         </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={signUpForm.control}
+                    name="confirmPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input type="password" placeholder="Confirm Password" className="bg-muted" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={signUpForm.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input type="tel" placeholder="Phone Number" className="bg-muted" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={signUpForm.control}
+                    name="acceptedTerms"
+                    render={({ field }) => (
+                      <FormItem className="flex items-start space-x-2 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            className="mt-1"
+                          />
+                        </FormControl>
+                        <label className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                          I acknowledge that I have read and agree to the{" "}
+                          <Link to="/terms" className="text-primary hover:underline">
+                            Terms of Use
+                          </Link>{" "}
+                          and{" "}
+                          <Link to="/privacy" className="text-primary hover:underline">
+                            Privacy Policy
+                          </Link>
+                        </label>
                         <FormMessage />
                       </FormItem>
                     )}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
@@ -11,9 +11,16 @@ import { Home, ArrowLeft } from "lucide-react";
 const signupSchema = z.object({
   email: z.string().trim().email({ message: "Invalid email address" }).max(255),
   password: z.string().min(8, { message: "Password must be at least 8 characters" }).max(100),
+  confirmPassword: z.string(),
   firstName: z.string().trim().min(1, { message: "First name is required" }).max(100),
   lastName: z.string().trim().min(1, { message: "Last name is required" }).max(100),
-  phone: z.string().trim().regex(/^\+?[1-9]\d{1,14}$/, { message: "Invalid phone number format" }),
+  phone: z.string().trim().min(10, "Phone number must be at least 10 digits").max(20),
+  acceptedTerms: z.boolean().refine((val) => val === true, {
+    message: "You must accept the Terms of Use and Privacy Policy",
+  }),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
 });
 
 type SignupFormData = z.infer<typeof signupSchema>;
@@ -26,13 +33,15 @@ const Signup = () => {
   const [formData, setFormData] = useState<SignupFormData>({
     email: "",
     password: "",
+    confirmPassword: "",
     firstName: "",
     lastName: "",
     phone: "",
+    acceptedTerms: false,
   });
   const [errors, setErrors] = useState<Partial<Record<keyof SignupFormData, string>>>({});
 
-  const handleInputChange = (field: keyof SignupFormData, value: string) => {
+  const handleInputChange = (field: keyof SignupFormData, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
@@ -152,16 +161,18 @@ const Signup = () => {
           </div>
 
           <div className="bg-card rounded-lg border p-8 shadow-sm">
+            <p className="text-sm italic text-muted-foreground mb-6">All fields required.</p>
+            
             <form onSubmit={handleSignup} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
                   <Input
                     id="firstName"
                     type="text"
-                    placeholder="John"
+                    placeholder="First Name"
                     value={formData.firstName}
                     onChange={(e) => handleInputChange("firstName", e.target.value)}
+                    className="bg-muted"
                     disabled={loading}
                     required
                   />
@@ -171,13 +182,13 @@ const Signup = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
                   <Input
                     id="lastName"
                     type="text"
-                    placeholder="Doe"
+                    placeholder="Last Name"
                     value={formData.lastName}
                     onChange={(e) => handleInputChange("lastName", e.target.value)}
+                    className="bg-muted"
                     disabled={loading}
                     required
                   />
@@ -188,13 +199,13 @@ const Signup = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder="Email"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
+                  className="bg-muted"
                   disabled={loading}
                   required
                 />
@@ -204,46 +215,75 @@ const Signup = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="+1234567890"
-                  value={formData.phone}
-                  onChange={(e) => handleInputChange("phone", e.target.value)}
-                  disabled={loading}
-                  required
-                />
-                {errors.phone && (
-                  <p className="text-sm text-destructive">{errors.phone}</p>
-                )}
-                <p className="text-xs text-muted-foreground">Include country code (e.g., +1 for US)</p>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder="Create Password"
                   value={formData.password}
                   onChange={(e) => handleInputChange("password", e.target.value)}
+                  className="bg-muted"
                   disabled={loading}
                   required
                 />
                 {errors.password && (
                   <p className="text-sm text-destructive">{errors.password}</p>
                 )}
-                <p className="text-xs text-muted-foreground">Minimum 8 characters</p>
               </div>
 
-              {verificationSent && (
-                <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
-                  <p className="text-sm text-foreground">
-                    📱 A verification code has been sent to your phone number.
-                  </p>
-                </div>
-              )}
+              <div className="space-y-2">
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={formData.confirmPassword}
+                  onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                  className="bg-muted"
+                  disabled={loading}
+                  required
+                />
+                {errors.confirmPassword && (
+                  <p className="text-sm text-destructive">{errors.confirmPassword}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="Phone Number"
+                  value={formData.phone}
+                  onChange={(e) => handleInputChange("phone", e.target.value)}
+                  className="bg-muted"
+                  disabled={loading}
+                  required
+                />
+                {errors.phone && (
+                  <p className="text-sm text-destructive">{errors.phone}</p>
+                )}
+              </div>
+
+              <div className="flex items-start space-x-2 pt-2">
+                <Checkbox 
+                  id="terms" 
+                  checked={formData.acceptedTerms}
+                  onCheckedChange={(checked) => handleInputChange('acceptedTerms', checked as boolean)}
+                  className="mt-1"
+                />
+                <label
+                  htmlFor="terms"
+                  className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  I acknowledge that I have read and agree to the{" "}
+                  <Link to="/terms" className="text-primary hover:underline">
+                    Terms of Use
+                  </Link>{" "}
+                  and{" "}
+                  <Link to="/privacy" className="text-primary hover:underline">
+                    Privacy Policy
+                  </Link>
+                </label>
+              </div>
+              {errors.acceptedTerms && <p className="text-sm text-destructive">{errors.acceptedTerms}</p>}
 
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? "Creating Account..." : "Create Account"}
@@ -258,12 +298,6 @@ const Signup = () => {
                 </Link>
               </p>
             </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <p className="text-xs text-muted-foreground">
-              By creating an account, you agree to our Terms of Service and Privacy Policy
-            </p>
           </div>
         </div>
       </div>
