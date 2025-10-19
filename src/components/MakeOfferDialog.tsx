@@ -13,6 +13,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { DollarSign } from "lucide-react";
+import { z } from "zod";
+
+const offerSchema = z.object({
+  price: z.number()
+    .positive("Offer price must be positive")
+    .max(999999999, "Offer price exceeds maximum ($999,999,999)")
+    .min(1, "Minimum offer is $1"),
+});
 
 interface MakeOfferDialogProps {
   propertyId: string;
@@ -24,13 +32,20 @@ export function MakeOfferDialog({ propertyId, propertyPrice, onOfferSubmitted }:
   const [open, setOpen] = useState(false);
   const [offerPrice, setOfferPrice] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const { createOffer } = useOfferMutations();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    
     const price = parseFloat(offerPrice);
     
-    if (!price || price <= 0) {
+    // Validate using Zod schema
+    const validation = offerSchema.safeParse({ price });
+    
+    if (!validation.success) {
+      setError(validation.error.errors[0].message);
       return;
     }
 
@@ -40,6 +55,7 @@ export function MakeOfferDialog({ propertyId, propertyPrice, onOfferSubmitted }:
       if (data) {
         setOpen(false);
         setOfferPrice("");
+        setError("");
         onOfferSubmitted?.();
       }
     } finally {
@@ -70,12 +86,20 @@ export function MakeOfferDialog({ propertyId, propertyPrice, onOfferSubmitted }:
               type="number"
               placeholder={propertyPrice.toString()}
               value={offerPrice}
-              onChange={(e) => setOfferPrice(e.target.value)}
-              min="0"
+              onChange={(e) => {
+                setOfferPrice(e.target.value);
+                setError("");
+              }}
+              min="1"
+              max="999999999"
               step="1000"
               required
               className="mt-2"
             />
+            {error && <p className="text-sm text-destructive mt-2">{error}</p>}
+            <p className="text-sm text-muted-foreground mt-2">
+              Maximum offer: $999,999,999
+            </p>
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
